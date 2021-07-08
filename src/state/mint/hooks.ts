@@ -11,7 +11,6 @@ import { tryParseAmount } from '../swap/hooks'
 import { useCurrencyBalances } from '../wallet/hooks'
 import { Field, typeInput } from './actions'
 
-
 const ZERO = JSBI.BigInt(0)
 
 export function useMintState(): AppState['mint'] {
@@ -123,17 +122,13 @@ export function useDerivedMintInfo(
       wrappedCurrencyAmount(currencyBAmount, chainId)
     ]
     if (pair && totalSupply && tokenAmountA && tokenAmountB) {
-      try
-      {
+      try {
         return pair.getLiquidityMinted(totalSupply, tokenAmountA, tokenAmountB)
-      } 
-      catch (e)
-      {
-        console.dir(e);
-        error = error ?? t("Insufficient Input Amount")
-        return undefined;
+      } catch (e) {
+        console.dir(e)
+        error = error ?? t('Insufficient Input Amount')
+        return undefined
       }
-      
     } else {
       return undefined
     }
@@ -146,7 +141,6 @@ export function useDerivedMintInfo(
       return undefined
     }
   }, [liquidityMinted, totalSupply])
-
 
   if (pairState === PairState.INVALID) {
     error = error ?? t('Invalid pair')
